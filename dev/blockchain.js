@@ -56,6 +56,7 @@ Blockchain.prototype.proofOfWork = function (previousBlockHash, currentBlockData
     return nonce;
 }
 
+// 노드내의 블록들을 조사하여 해당 체인이 적합한지 검사 (true면 문제없음)
 Blockchain.prototype.chainIsValid = function (blockchain){
     let validChain = true;
     for(let i = 1; i< blockchain.length;i++){
@@ -66,16 +67,20 @@ Blockchain.prototype.chainIsValid = function (blockchain){
             { transactions:currentBlock['transactions'], index:currentBlock['index'] },
             currentBlock['nonce']
         );
+        
+        // 생성한 블록의 해시값이 적절한지 체크
         if(blockHash.substring(0,4) !== '0000')
             validChain = false;
-
+        
+        // 이전 블록의 해쉬와 현재블록이 가지고 있는 이전 블록의 해쉬값과 일치하는지 검사
         if(currentBlock['previousBlockHash'] !== prevBlock['hash'])
             validChain = false;
 
         // console.log('previousBlockHash => ', prevBlock['hash']);
         // console.log('currentBlockHash => ', currentBlock['hash']);
     }
-
+    
+    // 제네시스 블록 검증
     const genesisBlock = blockchain[0];
     const correctNonce = genesisBlock['nonce'] === 100;
     const correctPreviousBlockHash = genesisBlock['previousBlockHash'] === '0';
