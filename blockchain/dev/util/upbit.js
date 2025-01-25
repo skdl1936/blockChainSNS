@@ -14,7 +14,7 @@ const getCurrentPrice = request(options, (error, response, body) => {
     if (error) throw new Error(error)
     const coins = JSON.parse(body)
 
-    console.log(coins)
+    console.log("coin info:" ,coins)
     const bitcoin = coins[0]
     const etc = coins[1]
     const doge = coins[2]

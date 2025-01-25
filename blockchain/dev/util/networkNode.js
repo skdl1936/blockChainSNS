@@ -13,6 +13,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const bitcoin = new Blockchain();
 const nodeAddress = uuidv1().split('-').join('');
 
+
+
+
 // 블록체인 전체 출력
 app.get('/blockchain', function (req, res) {
     res.send(bitcoin)
